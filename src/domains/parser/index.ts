@@ -6,11 +6,11 @@ import { telegramBot } from "../../index"
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import { HttpRequestResultDto } from '../../http.dto';
 import UserAgent from 'user-agents'
-import { parseKaspiProductPageQueue } from '../../queue/parse-kaspi-product-page-queue';
+import { salesParseKaspiProductPageQueue } from '../../queue/parse-kaspi-product-page-queue';
 import { PositionProcessData } from '../../data/positions-process';
 import { ParserUtils } from '../../utils/parser';
-import { parseKaspiMerchantProductsQueue } from '../../queue/parse-kaspi-merhant-products-queue';
-import { sendTelegramMessageQueue } from '../../queue/send-telegram-message-queue';
+import { salesParseKaspiMerchantProductsQueue } from '../../queue/parse-kaspi-merhant-products-queue';
+import { salesSendTelegramMessageQueue } from '../../queue/send-telegram-message-queue';
 
 export interface IProduct {
   url: string,
@@ -125,9 +125,9 @@ export class Parser {
       return
     }
     const requestId = ctx.message.from.id + ":" + messageId
-    sendTelegramMessageQueue.add({ merchantName, requestId, userId: ctx.message.from.id, requestType: "setShopName" })
+    salesSendTelegramMessageQueue.add({ merchantName, requestId, userId: ctx.message.from.id, requestType: "setShopName" })
 
-    parseKaspiMerchantProductsQueue.add({ merchantId: id, merchantName, requestId, userId: ctx.message.from.id, pageNum: 1 })
+    salesParseKaspiMerchantProductsQueue.add({ merchantId: id, merchantName, requestId, userId: ctx.message.from.id, pageNum: 1 })
 
 
     //productsData.productsAmount = positionsArray.length

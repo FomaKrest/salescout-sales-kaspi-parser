@@ -10,7 +10,7 @@ type JobType = {
   requestType: "setShopName" | "setMerchantProductsParsingState" | "setPositionsParsingState" | "sendParsingResult" | "sendPositionProducts"
 }
 
-export const sendTelegramMessageQueue = new Queue<JobType>(
+export const salesSendTelegramMessageQueue = new Queue<JobType>(
   'send-telegram-message-queue',
   Config.redisUrl,
 );

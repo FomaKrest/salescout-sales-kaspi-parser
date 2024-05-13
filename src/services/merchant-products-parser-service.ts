@@ -4,16 +4,16 @@ import { initRedis } from "../redis/init-redis"
 import { MongoDatabase } from '../db'
 import { ParserUtils } from '../utils/parser'
 import { PositionProcessData } from '../data/positions-process'
-import { sendTelegramMessageQueue } from '../queue/send-telegram-message-queue'
+import { salesSendTelegramMessageQueue } from '../queue/send-telegram-message-queue'
 import axios from 'axios'
-import { parseKaspiMerchantProductsQueue } from '../queue/parse-kaspi-merhant-products-queue'
+import { salesParseKaspiMerchantProductsQueue } from '../queue/parse-kaspi-merhant-products-queue'
 import { IProduct } from '../domains/parser'
-import { parseKaspiProductPageQueue } from '../queue/parse-kaspi-product-page-queue'
+import { salesParseKaspiProductPageQueue } from '../queue/parse-kaspi-product-page-queue'
 
 const parsedPagesAmount: any = {};
 
 const start = () => {
-  parseKaspiMerchantProductsQueue.process(6, async (job) => {
+  salesParseKaspiMerchantProductsQueue.process(6, async (job) => {
     const { merchantId, merchantName, requestId, pageNum, userId } = job.data;
 
     console.log(`${requestId} Started`);
@@ -24,7 +24,7 @@ const start = () => {
     if (pageNum > 1) {
       refererUrl += `&page=${pageNum}`
     } else {
-      sendTelegramMessageQueue.add({ userId, requestId, merchantName, requestType: "setMerchantProductsParsingState" });
+      salesSendTelegramMessageQueue.add({ userId, requestId, merchantName, requestType: "setMerchantProductsParsingState" });
     }
 
     //console.log((await ParserUtils.getFilterUrlAndPayload(+merchantId, pageNum, refererUrl)).url);
@@ -51,7 +51,7 @@ const start = () => {
         PositionProcessData.addNewProcess(requestId, products, userId, merchantId);
 
         for (let i = 2; i <= pagesCount; i++) {
-          parseKaspiMerchantProductsQueue.add({ merchantId, requestId, pageNum: i, userId, merchantName });
+          salesParseKaspiMerchantProductsQueue.add({ merchantId, requestId, pageNum: i, userId, merchantName });
         }
         parsedPagesAmount[requestId] = { products, pagesCount }
       } else {
@@ -66,7 +66,7 @@ const start = () => {
         const numericIdProducts = parsedPagesAmount[requestId].products.filter((product: IProduct) => { return !isNaN(+product.id.at(-1)!) })
         console.log(numericIdProducts.length)
         numericIdProducts.forEach((product: IProduct) => {
-          parseKaspiProductPageQueue.add({
+          salesParseKaspiProductPageQueue.add({
             userId,
             merchantId,
             requestId,
@@ -78,7 +78,7 @@ const start = () => {
       }
     }).catch(async (err) => {
       console.log(err)
-      parseKaspiMerchantProductsQueue.add(job.data)
+      salesParseKaspiMerchantProductsQueue.add(job.data)
     })
   });
 }

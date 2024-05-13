@@ -1,7 +1,7 @@
-import { ObjectId, Schema } from "mongoose";
+import { Schema } from "mongoose";
 import { MongoDatabase } from "../index.js";
 
-const COLLECTION_NAME = 'PositionProsess';
+const COLLECTION_NAME = 'PositionProcess';
 
 export interface IPositionProsess {
   requestId: string,

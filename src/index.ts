@@ -7,7 +7,7 @@ import { Config } from "./domains/config/index.js"
 import { initRedis } from './redis/init-redis.js';
 import { MongoDatabase } from './db/index.js';
 import { Parser } from './domains/parser/index.js';
-import { sendTelegramMessageQueue } from './queue/send-telegram-message-queue.js';
+import { salesSendTelegramMessageQueue } from './queue/send-telegram-message-queue.js';
 import { sendMessagesProcessStart } from "./services/send-messages-service.js";
 import { UserData } from './data/user/index.js';
 
@@ -99,7 +99,7 @@ export class KaspiTelegramBot {
     console.log(merchantName);
     console.log(ctx.match)
     const requestId = ctx.update.callback_query.from.id + ":" + ctx.update.callback_query.message.message_id
-    sendTelegramMessageQueue.add({
+    salesSendTelegramMessageQueue.add({
       userId: ctx.update.callback_query.from.id,
       requestId: requestId,
       merchantName: merchantName,

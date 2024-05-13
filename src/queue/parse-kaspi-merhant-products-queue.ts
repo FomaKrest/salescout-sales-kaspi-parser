@@ -10,7 +10,7 @@ type JobType = {
   merchantName: string,
 }
 
-export const parseKaspiMerchantProductsQueue = new Queue<JobType>(
+export const salesParseKaspiMerchantProductsQueue = new Queue<JobType>(
   'parse-kaspi-merchant-products-queue',
   Config.redisUrl,
 );

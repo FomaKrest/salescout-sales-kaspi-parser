@@ -1,4 +1,4 @@
-import { sendTelegramMessageQueue } from '../queue/send-telegram-message-queue'
+import { salesSendTelegramMessageQueue } from '../queue/send-telegram-message-queue'
 
 import { telegramBot } from '..'
 import { PositionProcessData } from '../data/positions-process';
@@ -11,7 +11,7 @@ let parsedPositionsAmounts: any = {};
 
 
 export const sendMessagesProcessStart = () => {
-  sendTelegramMessageQueue.process(1, async (job) => {
+  salesSendTelegramMessageQueue.process(1, async (job) => {
     const { userId, requestId, data, requestType, merchantName } = job.data;
 
     switch (requestType) {

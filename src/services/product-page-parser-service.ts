@@ -1,18 +1,18 @@
 import { HttpRequestResultDto } from '../http.dto'
-import { parseKaspiProductPageQueue } from '../queue/parse-kaspi-product-page-queue'
+import { salesParseKaspiProductPageQueue } from '../queue/parse-kaspi-product-page-queue'
 
 import { initRedis } from "../redis/init-redis"
 import { MongoDatabase } from '../db'
 import { ParserUtils } from '../utils/parser'
 import { PositionProcessData } from '../data/positions-process'
-import { sendTelegramMessageQueue } from '../queue/send-telegram-message-queue'
+import { salesSendTelegramMessageQueue } from '../queue/send-telegram-message-queue'
 
 
 //const productsData: {userId: string, merchants: {merchantId: string, , products: {}}[]}[] = [{}]
 
 
 const start = () => {
-  parseKaspiProductPageQueue.process(6, async (job) => {
+  salesParseKaspiProductPageQueue.process(6, async (job) => {
     //console.log(job.data)
     try {
 
@@ -67,7 +67,7 @@ const start = () => {
         //console.log(price);
       } else {
         console.log("ERROR")
-        parseKaspiProductPageQueue.add(job.data)
+        salesParseKaspiProductPageQueue.add(job.data)
         return
       }
 
@@ -78,7 +78,7 @@ const start = () => {
       //console.log(`${product.id} Finished`);
       //productsData.products.push({id: product.id, position})
       //console.log(productsData)
-      sendTelegramMessageQueue.add({
+      salesSendTelegramMessageQueue.add({
         userId,
         requestId,
         data: { productsAmount },
