@@ -1,0 +1,31 @@
+{
+  "name": "kaspi-positions-parser-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx nodemon",
+    "products-parser-service": "npx tsx ./src/services/product-page-parser-service.ts",
+    "merchant-parser-service": "npx tsx ./src/services/merchant-products-parser-service.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "bull": "^4.12.2",
+    "cheerio": "^1.0.0-rc.12",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.4",
+    "mongoose": "^8.3.4",
+    "redis": "^4.6.13",
+    "selenium-webdriver": "^4.20.0",
+    "telegraf": "^4.16.3",
+    "telegraf-session-local": "^2.1.1",
+    "user-agents": "^1.1.199"
+  },
+  "devDependencies": {
+    "@types/selenium-webdriver": "^4.1.22",
+    "@types/user-agents": "^1.0.4",
+    "nodemon": "^3.1.0"
+  }
+}

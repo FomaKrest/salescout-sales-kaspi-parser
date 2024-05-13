@@ -1,0 +1,34 @@
+{
+  "sessions": [
+    {
+      "id": "696725107:696725107",
+      "data": {
+        "reply_to_message": "start"
+      }
+    },
+    {
+      "id": "867377670:867377670",
+      "data": {
+        "reply_to_message": "start"
+      }
+    },
+    {
+      "id": "1412047572:1412047572",
+      "data": {
+        "reply_to_message": "start"
+      }
+    },
+    {
+      "id": "78923920:78923920",
+      "data": {
+        "reply_to_message": "start"
+      }
+    },
+    {
+      "id": "6526001162:6526001162",
+      "data": {
+        "reply_to_message": "start"
+      }
+    }
+  ]
+}
